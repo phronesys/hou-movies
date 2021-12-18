@@ -1,0 +1,13 @@
+.input-search {
+  @apply flex flex-row items-center gap-1;
+}
+.input-search input{
+  @apply px-4 py-2 w-full ;
+  @apply outline-none rounded-lg caret-houm-primary text-gray-900;
+}
+.input-search svg {
+  @apply w-10 h-10 min-w-[40px] min-h-[40px] p-2;
+  @apply bg-white text-houm-secondary fill-current rounded-lg border border-white;
+  @apply hover:border-houm-secondary cursor-pointer select-none;
+}
+
