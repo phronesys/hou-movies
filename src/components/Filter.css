@@ -1,0 +1,26 @@
+.filter {
+  @apply relative text-houm-dark;
+}
+
+.filter button {
+  @apply px-4 py-2 rounded-lg;
+  @apply hover:text-houm-primary border border-transparent text-gray-900 font-medium;
+}
+
+.filter button.open {
+  @apply border-houm-primary text-houm-primary;
+}
+
+.filter > .list {
+  @apply absolute top-12 px-4 py-2;
+  @apply bg-white shadow rounded-lg;
+}
+
+.filter > .list > li label {
+  @apply w-full flex flex-row gap-4 items-center p-2;
+  @apply select-none cursor-pointer hover:underline underline-offset-2 decoration-houm-primary rounded-lg;
+}
+
+.filter > .list > li label input[type="checkbox"]:checked {
+  @apply accent-houm-primary;
+}
