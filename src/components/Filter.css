@@ -12,8 +12,12 @@
 }
 
 .filter > .list {
-  @apply absolute top-12 px-4 py-2;
+  @apply absolute top-12 px-4 py-2 hidden;
   @apply bg-white shadow rounded-lg;
+}
+
+.filter > .list.open {
+  @apply block;
 }
 
 .filter > .list > li label {

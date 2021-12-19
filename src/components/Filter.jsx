@@ -1,16 +1,12 @@
 import "./Filter.css";
 import { useState } from "react";
+import FilterList from "./FilterList";
 
 export default function Filter() {
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState(
-    new Array(movieGenres.length).fill(false)
-  );
-  console.log(selected);
-  const updateSelected = (value, index) => {
-    const newSelected = selected;
-    newSelected[index] = value;
-    setSelected(newSelected);
+
+  const handleParent = (...args) => {
+    console.log(args);
   };
 
   return (
@@ -21,26 +17,9 @@ export default function Filter() {
       >
         Filter
       </button>
-      {isOpen && (
-        <ul className="list">
-          {movieGenres.map((genre, index) => {
-            return (
-              <li key={index}>
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={selected[index]}
-                    onChange={(event) =>
-                      updateSelected(event.target.checked, index)
-                    }
-                  />
-                  <div>{genre.type}</div>
-                </label>
-              </li>
-            );
-          })}
-        </ul>
-      )}
+      <ul className={isOpen ? "list open" : "list"}>
+        <FilterList movieGenres={movieGenres} handleParent={handleParent} />
+      </ul>
     </div>
   );
 }
@@ -48,30 +27,30 @@ export default function Filter() {
 const movieGenres = [
   {
     type: "Action",
-    id: "1",
+    id: "open-source",
   },
   {
     type: "Suspense",
-    id: "2",
+    id: "digital",
   },
   {
     type: "Thriller",
-    id: "3",
+    id: "online",
   },
   {
     type: "Fantasy",
-    id: "4",
+    id: "cross-platform",
   },
   {
     type: "Comedy",
-    id: "5",
+    id: "1080p",
   },
   {
     type: "Romance",
-    id: "6",
+    id: "cross-platform",
   },
   {
     type: "Anime",
-    id: "7",
+    id: "open-source",
   },
 ];
