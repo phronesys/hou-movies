@@ -1,9 +1,34 @@
 import "./Filter.css";
 import { useState } from "react";
 
-export default function Filter() {
+export default function Filter({ selected, setSelected }) {
   const [isOpen, setIsOpen] = useState(false);
-  const list = filterList();
+  const addSelectedIndex = (id) => {
+    console.log(selected);
+    if (!Array.isArray(selected)) return;
+    const indexOfSelected = selected.indexOf(id);
+    const newSelected = selected;
+    if (indexOfSelected === -1) newSelected.push(id)
+    else newSelected.splice(indexOfSelected, 1)
+    console.log(newSelected);
+    setSelected(newSelected);
+  };
+
+  const list = () => {
+    return movieGenres.map((genre, index) => (
+      <li key={index}>
+        <label>
+          <input
+            type="checkbox"
+            checked={selected.includes(genre.id)}
+            onChange={() => addSelectedIndex(genre.id)}
+          />
+          {selected.includes(genre.id)}
+          <div>{genre.type}</div>
+        </label>
+      </li>
+    ));
+  };
   return (
     <div className="filter">
       <button
@@ -12,49 +37,38 @@ export default function Filter() {
       >
         Filter
       </button>
-      {isOpen && <ul className="list">{list}</ul>}
+      {isOpen && <ul className="list">{list()}</ul>}
     </div>
   );
-}
-
-function filterList() {
-  return movieGenres.map((genre, index) => (
-    <li key={index}>
-      <label>
-        <input type="checkbox" />
-        <div>{genre.type}</div>
-      </label>
-    </li>
-  ));
 }
 
 const movieGenres = [
   {
     type: "Action",
-    id: "",
+    id: "1",
   },
   {
     type: "Suspense",
-    id: "",
+    id: "2",
   },
   {
     type: "Thriller",
-    id: "",
+    id: "3",
   },
   {
     type: "Fantasy",
-    id: "",
+    id: "4",
   },
   {
     type: "Comedy",
-    id: "",
+    id: "5",
   },
   {
     type: "Romance",
-    id: "",
+    id: "6",
   },
   {
     type: "Anime",
-    id: "",
+    id: "7",
   },
 ];
