@@ -23,7 +23,7 @@ function App() {
   return (
     <div className="main">
       <NavBar></NavBar>
-      {data.length > 0 ? data.map((movie) => <div key={movie.id}>{movie.title}</div>) : ""}
+      {data && data.length > 0 ? data.map((movie) => <div key={movie.id}>{movie.title}</div>) : ""}
     </div>
   );
 }
