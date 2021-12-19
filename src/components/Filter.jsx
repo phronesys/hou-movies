@@ -1,6 +1,7 @@
 import "./Filter.css";
 import { useState } from "react";
 import FilterList from "./FilterList";
+import IconFilter from "./icons/IconFilter";
 
 export default function Filter() {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,7 +16,7 @@ export default function Filter() {
         className={isOpen ? "open" : ""}
         onClick={() => setIsOpen(!isOpen)}
       >
-        Filter
+        Filter <IconFilter></IconFilter>
       </button>
       <ul className={isOpen ? "list open" : "list"}>
         <FilterList movieGenres={movieGenres} handleParent={handleParent} />
