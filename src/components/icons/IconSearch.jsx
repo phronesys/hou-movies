@@ -1,4 +1,4 @@
-export default function () {
+export default function IconSearch() {
   return (
     <svg
       width="18"

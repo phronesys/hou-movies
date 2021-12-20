@@ -1,60 +1,57 @@
 import "./Filter.css";
 import { useState } from "react";
+import FilterList from "./FilterList";
+import IconFilter from "./icons/IconFilter";
 
 export default function Filter() {
   const [isOpen, setIsOpen] = useState(false);
-  const list = filterList();
+
+  const handleParent = (...args) => {
+    console.log(args);
+  };
+
   return (
     <div className="filter">
       <button
         className={isOpen ? "open" : ""}
         onClick={() => setIsOpen(!isOpen)}
       >
-        Filter
+        Filter <IconFilter></IconFilter>
       </button>
-      {isOpen && <ul className="list">{list}</ul>}
+      <ul className={isOpen ? "list open" : "list"}>
+        <FilterList movieGenres={movieGenres} handleParent={handleParent} />
+      </ul>
     </div>
   );
-}
-
-function filterList() {
-  return movieGenres.map((genre, index) => (
-    <li key={index}>
-      <label>
-        <input type="checkbox" />
-        <div>{genre.type}</div>
-      </label>
-    </li>
-  ));
 }
 
 const movieGenres = [
   {
     type: "Action",
-    id: "",
+    id: "open-source",
   },
   {
     type: "Suspense",
-    id: "",
+    id: "digital",
   },
   {
     type: "Thriller",
-    id: "",
+    id: "online",
   },
   {
     type: "Fantasy",
-    id: "",
+    id: "cross-platform",
   },
   {
     type: "Comedy",
-    id: "",
+    id: "1080p",
   },
   {
     type: "Romance",
-    id: "",
+    id: "cross-platform",
   },
   {
     type: "Anime",
-    id: "",
+    id: "open-source",
   },
 ];
