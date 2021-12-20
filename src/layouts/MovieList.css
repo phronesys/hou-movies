@@ -2,3 +2,7 @@ section {
   @apply flex flex-row flex-wrap justify-center gap-4 w-full h-full px-4 py-24;
   @apply bg-houm-light;
 }
+
+#loading {
+  @apply h-screen w-full text-xl font-medium;
+}

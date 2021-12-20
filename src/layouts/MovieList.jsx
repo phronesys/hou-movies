@@ -1,11 +1,11 @@
 import "./MovieList.css";
-import getMovieList from "../services/getMovieList";
+import getMovieListUrl from "../services/getMovieListUrl";
 import MovieCard from "../components/MovieCard";
 import { useEffect, useState } from "react";
 
 const MovieList = () => {
   const [data, setData] = useState([]);
-  const popularMoviesUrl = getMovieList("popular");
+  const popularMoviesUrl = getMovieListUrl("popular");
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -48,7 +48,7 @@ const MovieList = () => {
           );
         })
       ) : (
-        <div id="error-card">Couldn't load any movies</div>
+        <div id="loading">Loading movies, or a bug 🐛</div>
       )}
     </section>
   );

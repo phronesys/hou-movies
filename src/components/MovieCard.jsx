@@ -1,12 +1,16 @@
 import "./MovieCard.css";
-import getMovieImage from "../services/getMovieImage";
+import getMovieImageUrl from "../services/getMovieImageUrl";
 export default function MovieCard(context) {
   const { title, releaseDate, posterPath, overview, genreIds, voteAverage } =
     context;
-  const image = getMovieImage(posterPath);
+  const imageUrl = getMovieImageUrl(posterPath);
   const moviePoster = {
-    backgroundImage: `url(${image})`,
+    backgroundImage: `url(${imageUrl})`,
   };
+  const list = genreIds.map((id) => {
+
+    return <span key={id}>{id}</span>
+  });
 
   return (
     <div className="movie">
@@ -20,11 +24,7 @@ export default function MovieCard(context) {
           <div className="votes">{voteAverage}</div>
         </div>
         {/* <p>{overview}</p{}> */}
-        <footer>
-          {genreIds.map((id) => (
-            <span key={id}>{id}</span>
-          ))}
-        </footer>
+        <footer>{list}</footer>
       </div>
     </div>
   );
