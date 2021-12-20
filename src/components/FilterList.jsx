@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-const FilterList = ({ movieGenres, handleParent }) => {
+const FilterList = ({ genres, handleParent }) => {
   const [selected, setSelected] = useState(
-    new Array(movieGenres.length).fill(false)
+    new Array(genres.length).fill(false)
   );
   const updateSelected = (value, index) => {
     const newSelected = selected;
@@ -10,15 +10,12 @@ const FilterList = ({ movieGenres, handleParent }) => {
     setSelected(newSelected);
     handleParent(selected);
   };
-  return movieGenres.map((genre, index) => {
+  return genres.map(({ id, name }) => {
     return (
-      <li key={index}>
+      <li key={id}>
         <label>
-          <input
-            type="checkbox"
-            onChange={(event) => updateSelected(event.target.checked, index)}
-          />
-          <div>{genre.type}</div>
+          <input type="checkbox" onChange={() => updateSelected(id)} />
+          <div>{name}</div>
         </label>
       </li>
     );
