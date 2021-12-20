@@ -1,10 +1,6 @@
 import getApiUrl from "../config";
 
-const getMovieList = (type) => {
-  const apiUrl = getApiUrl(`movie/${type}`);
-  console.log(apiUrl);
-  return apiUrl;
-}
+const getMovieList = (type) => getApiUrl(`movie/${type}`);
 
 export default getMovieList;
 

@@ -1,0 +1,27 @@
+.movie {
+  @apply flex flex-col min-w-[350px] w-[350px] h-[400px];
+  @apply bg-white rounded-2xl overflow-hidden border border-white shadow shadow-gray-200 cursor-pointer;
+  @apply hover:border-houm-primary;
+}
+.movie .image {
+  @apply w-full h-full bg-top bg-cover bg-no-repeat;
+}
+.movie .content {
+  @apply px-4 py-3 flex flex-col gap-1.5; 
+}
+.movie .content h1 {
+  @apply text-houm-dark text-xl font-bold w-full whitespace-nowrap text-ellipsis overflow-hidden;
+}
+.movie .content .info {
+  @apply flex flex-row justify-between items-center; 
+}
+.movie .content .info .release {
+  @apply px-2 py-1 rounded-xl bg-houm-dark text-white font-semibold;
+}
+.movie .content .info .votes {
+  @apply p-2;
+  @apply text-houm-primary bg-houm-light font-semibold text-xl rounded-full;
+}
+.movie .content footer {
+  @apply flex flex-row gap-2;
+}

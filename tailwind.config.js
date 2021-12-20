@@ -9,6 +9,7 @@ module.exports = {
         "houm-primary": "#ff452b",
         "houm-secondary": "#fa8072",
         "houm-dark": "#263238",
+        "houm-light": "#fff8f7"
       },
     },
   },
