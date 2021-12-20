@@ -18,8 +18,6 @@ function App() {
     getMovies();
   }, []);
 
-  console.log(data);
-
   return (
     <div className="main">
       <NavBar></NavBar>
