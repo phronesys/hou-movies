@@ -1,27 +1,12 @@
 import "./App.css";
 import NavBar from "./layouts/NavBar";
-import getMovieList from "./services/getMovieList";
-import { useEffect, useState } from "react";
-
-const moviesUrl = getMovieList("popular");
+import MovieList from "./layouts/MovieList";
 
 function App() {
-  const [data, setData] = useState({});
-
-  useEffect(() => {
-    const getMovies = async () => {
-      const res = await fetch(moviesUrl)
-        .then((res) => res.json())
-        .catch((error) => console.log(error));
-      setData(res.results);
-    };
-    getMovies();
-  }, []);
-
   return (
     <div className="main">
       <NavBar></NavBar>
-      {data && data.length > 0 ? data.map((movie) => <div key={movie.id}>{movie.title}</div>) : ""}
+      <MovieList></MovieList>
     </div>
   );
 }
