@@ -1,6 +1,6 @@
 import "./Filter.css";
-import { useState, useEffect } from "react";
-import FilterList from "./FilterList";
+import { useState, useEffect, useRef } from "react";
+import FilterItem from "./FilterItem";
 import IconFilter from "./icons/IconFilter";
 import IconClearFilter from "./icons/IconClearFilter";
 import getMovieGenresUrl from "../services/getMovieGenresUrl";
@@ -17,16 +17,18 @@ export default function Filter() {
     if (indexOfId === -1) newSelected.push(id);
     else newSelected.splice(indexOfId, 1);
     setSelected(newSelected);
-    return selected.includes(id);
   };
   const clearSelected = () => {
     setSelected([]);
-    console.log(selected);
-  }
+    setIsOpen(false);
+  };
 
   const loadSelected = () => {
     console.log(selected);
-  }
+    setIsOpen(false);
+  };
+
+  const isChecked = (id) => selected.includes(id);
 
   useEffect(() => {
     const fetchGenres = async () => {
@@ -47,17 +49,26 @@ export default function Filter() {
         Filter <IconFilter></IconFilter>
       </button>
       <div className={isOpen ? "list open" : "list"}>
-        <FilterList
-          genres={genres}
-          updateSelected={updateSelected}
-          selected={selected}
-        />
+        <ul>
+          {genres.map(({ id, name }) => (
+            <FilterItem
+              key={id}
+              name={name}
+              id={id}
+              updateSelected={updateSelected}
+              checked={isChecked(id)}
+            />
+          ))}
+        </ul>
         <footer>
-          <button className="primary" onClick={() => loadSelected()}>
-            Done
+          <button
+            className="primary"
+            onClick={() => loadSelected()}
+          >
+            Fetch
           </button>
           <button onClick={() => clearSelected()}>
-            Clear
+            Clear all
             <IconClearFilter></IconClearFilter>
           </button>
         </footer>
