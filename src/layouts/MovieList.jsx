@@ -1,26 +1,28 @@
 import "./MovieList.css";
-import getMovieListUrl from "../services/getMovieListUrl";
+import { getMovieList } from "../services/movies";
 import MovieCard from "../components/MovieCard";
-import { useEffect, useState } from "react";
+import { useEffect, useContext } from "react";
+import AppContext from "../context/AppContext";
 
 const MovieList = () => {
-  const [data, setData] = useState([]);
-  const popularMoviesUrl = getMovieListUrl("popular");
+  /* using useContext instead of useState 
+  to store the global movie list */
+  const { list, setList } = useContext(AppContext);
 
   useEffect(() => {
-    const fetchMovies = async () => {
-      const res = await fetch(popularMoviesUrl)
-        .then((res) => res.json())
-        .catch((error) => console.log(error));
-      setData(res.results);
-    };
-    fetchMovies();
-  }, []);
+    if (list.length === 0) fetchMovies();
+
+  }, [list, setList]);
+
+  const fetchMovies = async () => {
+    const movies = await getMovieList();
+    setList(movies.results);
+  };
 
   return (
     <section id="movie-list">
-      {data && data.length > 0 ? (
-        data.map((movie) => {
+      {list && list.length > 0 ? (
+        list.map((movie) => {
           const {
             id,
             title,
