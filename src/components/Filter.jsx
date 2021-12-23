@@ -18,9 +18,11 @@ export default function Filter() {
     else newSelected.splice(indexOfId, 1);
     setSelected(newSelected);
   };
+
   const clearSelected = () => {
     setSelected([]);
     setIsOpen(false);
+
   };
 
   const loadSelected = () => {
@@ -57,6 +59,7 @@ export default function Filter() {
               id={id}
               updateSelected={updateSelected}
               checked={isChecked(id)}
+              clearSelected={clearSelected}
             />
           ))}
         </ul>

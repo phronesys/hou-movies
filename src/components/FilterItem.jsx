@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const FilterItem = ({ id, name, updateSelected, checked }) => {
+const FilterItem = ({ id, name, updateSelected, clearSelected, checked }) => {
   const [isChecked, setIsChecked] = useState(checked);
 
   const handleClick = () => {
@@ -11,7 +11,7 @@ const FilterItem = ({ id, name, updateSelected, checked }) => {
   /* if checkbox state changes on parent we update the value locally */
   useEffect(() => {
     setIsChecked(checked);
-  }, [checked]);
+  }, [checked, clearSelected]);
 
   return (
     <li key={id}>
