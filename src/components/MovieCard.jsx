@@ -1,15 +1,29 @@
 import "./MovieCard.css";
-import getMovieImageUrl from "../services/getMovieImageUrl";
-export default function MovieCard(context) {
-  const { title, releaseDate, posterPath, overview, genreIds, voteAverage } =
-    context;
-  const imageUrl = getMovieImageUrl(posterPath);
+import { useEffect, useState } from "react";
+import { getGenreById } from "../services/movies";
+
+export default function MovieCard({
+  title,
+  releaseDate,
+  posterPath,
+  overview,
+  genreIds,
+  voteAverage,
+}) {
+  const imageUrl = `https://image.tmdb.org/t/p/w300/${posterPath}`;
   const moviePoster = {
     backgroundImage: `url(${imageUrl})`,
   };
-  const list = genreIds.map((id) => {
-
-    return <span key={id}>{id}</span>
+  const genreList = genreIds.map((id) => {
+    const [genre, setGenre] = useState([]);
+    useEffect(() => {
+      const fetchGenre = async () => {
+        const result = await getGenreById(id);
+        setGenre(result);
+      };
+      fetchGenre();
+    }, []);
+    return <span key={id}>{genre.name}</span>;
   });
 
   return (
@@ -24,7 +38,7 @@ export default function MovieCard(context) {
           <div className="votes">{voteAverage}</div>
         </div>
         {/* <p>{overview}</p{}> */}
-        <footer>{list}</footer>
+        <footer>{genreList}</footer>
       </div>
     </div>
   );

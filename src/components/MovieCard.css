@@ -23,5 +23,9 @@
   @apply text-houm-primary bg-houm-light font-semibold text-xl rounded-full;
 }
 .movie .content footer {
-  @apply flex flex-row gap-2;
+  @apply flex flex-row gap-2 flex-wrap;
+}
+.movie .content footer span {
+  @apply min-w-max px-3 py-1;
+  @apply bg-houm-secondary text-white rounded-full;
 }
