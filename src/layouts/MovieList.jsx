@@ -11,8 +11,7 @@ const MovieList = () => {
 
   useEffect(() => {
     if (list.length === 0) fetchMovies();
-
-  }, [list, setList]);
+  });
 
   const fetchMovies = async () => {
     const movies = await getMovieList();
@@ -20,39 +19,39 @@ const MovieList = () => {
   };
 
   return (
-    <section id="movie-list">
-      {list && list.length > 0 ? (
-        list.map((movie) => {
-          const {
-            id,
-            title,
-            original_title,
-            release_date,
-            backdrop_path,
-            poster_path,
-            overview,
-            genre_ids,
-            vote_average,
-          } = movie;
-          return (
-            <MovieCard
-              key={id}
-              id={id}
-              title={title}
-              originalTitle={original_title}
-              releaseDate={release_date}
-              backdropPath={backdrop_path}
-              posterPath={poster_path}
-              overview={overview}
-              genreIds={genre_ids}
-              voteAverage={vote_average}
-            />
-          );
-        })
-      ) : (
-        <div id="loading">Loading movies, or a bug 🐛</div>
-      )}
-    </section>
+      <section id="movie-list">
+        {list && list.length > 0 ? (
+          list.map((movie) => {
+            const {
+              id,
+              title,
+              original_title,
+              release_date,
+              backdrop_path,
+              poster_path,
+              overview,
+              genre_ids,
+              vote_average,
+            } = movie;
+            return (
+              <MovieCard
+                key={id}
+                id={id}
+                title={title}
+                originalTitle={original_title}
+                releaseDate={release_date}
+                backdropPath={backdrop_path}
+                posterPath={poster_path}
+                overview={overview}
+                genreIds={genre_ids}
+                voteAverage={vote_average}
+              />
+            );
+          })
+        ) : (
+          <div id="loading">Loading movies, or a bug 🐛</div>
+        )}
+      </section>
   );
 };
 

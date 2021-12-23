@@ -1,6 +1,6 @@
 import "./MovieCard.css";
-import { useEffect, useState } from "react";
-import { getGenreById } from "../services/movies";
+import { useContext } from "react";
+import GenresContext from "../context/GenresContext";
 
 export default function MovieCard({
   title,
@@ -10,19 +10,13 @@ export default function MovieCard({
   genreIds,
   voteAverage,
 }) {
+  const { genres } = useContext(GenresContext);
   const imageUrl = `https://image.tmdb.org/t/p/w300/${posterPath}`;
   const moviePoster = {
     backgroundImage: `url(${imageUrl})`,
   };
   const genreList = genreIds.map((id) => {
-    const [genre, setGenre] = useState([]);
-    useEffect(() => {
-      const fetchGenre = async () => {
-        const result = await getGenreById(id);
-        setGenre(result);
-      };
-      fetchGenre();
-    }, []);
+    const genre = genres.find((genre) => genre.id === id);
     return <span key={id}>{genre.name}</span>;
   });
 

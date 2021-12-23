@@ -5,11 +5,12 @@ import IconFilter from "./icons/IconFilter";
 import IconClearFilter from "./icons/IconClearFilter";
 import { getMovieGenres, getMoviesByGenre } from "../services/movies";
 import AppContext from "../context/AppContext";
+import GenresContext from "../context/GenresContext";
 
 export default function Filter() {
   const [isOpen, setIsOpen] = useState(false);
-  const [genres, setGenres] = useState([]);
   const [selected, setSelected] = useState([]);
+  const {genres, setGenres} = useContext(GenresContext)
   const { list, setList } = useContext(AppContext);
 
   const updateSelected = (id) => {
@@ -35,7 +36,7 @@ export default function Filter() {
 
   const fetchMoviesByGenre = async () => {
     const movieList = await getMoviesByGenre(selected);
-    setList(movieList);
+    setList(movieList.results);
   };
 
   const fetchMovies = async () => {
@@ -43,42 +44,41 @@ export default function Filter() {
     setGenres(genreList.genres);
   };
 
-  /* runs on mounted */
   useEffect(() => {
     fetchMovies();
   }, []);
 
   return (
-    <div className="filter">
-      <button
-        className={isOpen ? "open" : ""}
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        Filter <IconFilter></IconFilter>
-      </button>
-      <div className={isOpen ? "list open" : "list"}>
-        <ul>
-          {genres.map(({ id, name }) => (
-            <FilterItem
-              key={id}
-              name={name}
-              id={id}
-              updateSelected={updateSelected}
-              checked={isChecked(id)}
-              clearSelected={clearSelected}
-            />
-          ))}
-        </ul>
-        <footer>
-          <button className="primary" onClick={() => loadSelected()}>
-            Fetch
-          </button>
-          <button onClick={() => clearSelected()}>
-            Clear all
-            <IconClearFilter></IconClearFilter>
-          </button>
-        </footer>
+      <div className="filter">
+        <button
+          className={isOpen ? "open" : ""}
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          Filter <IconFilter></IconFilter>
+        </button>
+        <div className={isOpen ? "list open" : "list"}>
+          <ul>
+            {genres.map(({ id, name }) => (
+              <FilterItem
+                key={id}
+                name={name}
+                id={id}
+                updateSelected={updateSelected}
+                checked={isChecked(id)}
+                clearSelected={clearSelected}
+              />
+            ))}
+          </ul>
+          <footer>
+            <button className="primary" onClick={() => loadSelected()}>
+              Fetch
+            </button>
+            <button onClick={() => clearSelected()}>
+              Clear all
+              <IconClearFilter></IconClearFilter>
+            </button>
+          </footer>
+        </div>
       </div>
-    </div>
   );
 }

@@ -17,11 +17,3 @@ export const getGenreById = async (id) => {
   const url = getApiUrl(`genre/${id}`);
   return await fetch(url).then(res => res.json());
 }
-
-export const getMoviesByGenre = async (genreList = []) => {
-  let url = getApiUrl(`discover/movie`)
-  const genreString = genreList.join(',');
-  url = url + `&with_genres=${genreString}`
-
-  return await fetch(url).then(res => res.json());
-}
