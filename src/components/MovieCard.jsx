@@ -11,7 +11,7 @@ export default function MovieCard({
   voteAverage,
 }) {
   const { genres } = useContext(GenresContext);
-  const imageUrl = `https://image.tmdb.org/t/p/w300/${posterPath}`;
+  const imageUrl = `https://image.tmdb.org/t/p/w500/${posterPath}`;
   const moviePoster = {
     backgroundImage: `url(${imageUrl})`,
   };
