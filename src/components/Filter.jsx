@@ -1,15 +1,16 @@
 import "./Filter.css";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useContext } from "react";
 import FilterItem from "./FilterItem";
 import IconFilter from "./icons/IconFilter";
 import IconClearFilter from "./icons/IconClearFilter";
-import getMovieGenresUrl from "../services/getMovieGenresUrl";
+import { getMovieGenres, getMoviesByGenre } from "../services/movies";
+import AppContext from "../context/AppContext";
 
 export default function Filter() {
-  const genresApiUrl = getMovieGenresUrl();
   const [isOpen, setIsOpen] = useState(false);
   const [genres, setGenres] = useState([]);
   const [selected, setSelected] = useState([]);
+  const { list, setList } = useContext(AppContext);
 
   const updateSelected = (id) => {
     const indexOfId = selected.indexOf(id);
@@ -22,24 +23,29 @@ export default function Filter() {
   const clearSelected = () => {
     setSelected([]);
     setIsOpen(false);
-
   };
 
   const loadSelected = () => {
-    console.log(selected);
+    if (selected.length === 0) return;
+    fetchMoviesByGenre();
     setIsOpen(false);
   };
 
   const isChecked = (id) => selected.includes(id);
 
+  const fetchMoviesByGenre = async () => {
+    const movieList = await getMoviesByGenre(selected);
+    setList(movieList);
+  };
+
+  const fetchMovies = async () => {
+    const genreList = await getMovieGenres();
+    setGenres(genreList.genres);
+  };
+
+  /* runs on mounted */
   useEffect(() => {
-    const fetchGenres = async () => {
-      const res = await fetch(genresApiUrl)
-        .then((res) => res.json())
-        .catch((error) => console.log(error));
-      setGenres(res.genres);
-    };
-    fetchGenres();
+    fetchMovies();
   }, []);
 
   return (
@@ -64,10 +70,7 @@ export default function Filter() {
           ))}
         </ul>
         <footer>
-          <button
-            className="primary"
-            onClick={() => loadSelected()}
-          >
+          <button className="primary" onClick={() => loadSelected()}>
             Fetch
           </button>
           <button onClick={() => clearSelected()}>
