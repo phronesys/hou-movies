@@ -10,4 +10,4 @@ This project is a solution to Houm's coding challenge, where we need to bring da
 - I built my own React components to learn more while doing this project
 - I learned about the Context, Hooks and React lifecycle
 
-This project should have been submitted 2 days ago, I didn't do it because I was focused on my current job and also because I got confused with the conflicting instructions.
+This project should have been submitted days ago, I didn't do it because I was focused on my current job and also because I got confused with the conflicting instructions.
