@@ -18,7 +18,7 @@
 }
 
 .filter > .list {
-  @apply absolute top-12 hidden flex-col;
+  @apply absolute top-12 right-0 hidden flex-col;
   @apply bg-white shadow rounded-lg overflow-hidden;
 }
 
