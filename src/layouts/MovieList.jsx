@@ -12,11 +12,15 @@ const MovieList = () => {
   const { list, setList } = useContext(AppContext);
   const { selected } = useContext(FilterContext);
   const [pageCount, setPageCount] = useState(1);
+  const [ratio, setRatio] = useState(0.5)
   const windowPosition = useWindowPosition();
 
   /* detect desired position */
   useEffect(() => {
-    if (window.scrollY > document.body.scrollHeight * 0.75) handleMovieFetch();
+    if (window.scrollY > document.body.scrollHeight * ratio) {
+      handleMovieFetch();
+      setRatio(0.75)
+    }
   }, [windowPosition]);
 
   /* will fetch initial movies on mounted */
