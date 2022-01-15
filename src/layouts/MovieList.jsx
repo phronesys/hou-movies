@@ -1,7 +1,7 @@
 import "./MovieList.css";
 import { getMovieList, getMoviesByGenre } from "../services/movies";
 import MovieCard from "../components/MovieCard";
-import { useEffect, useContext, useState } from "react";
+import { useEffect, useContext, useState, memo } from "react";
 import AppContext from "../context/AppContext";
 import FilterContext from "../context/FilterContext";
 import useWindowPosition from "../hooks/useWindowPosition";
@@ -12,68 +12,64 @@ const MovieList = () => {
   const { list, setList } = useContext(AppContext);
   const { selected } = useContext(FilterContext);
   const [pageCount, setPageCount] = useState(1);
-  const [maxScrollY, setMaxScrollY] = useState(0);
   const windowPosition = useWindowPosition();
 
+  /* detect desired position */
   useEffect(() => {
-    const noFilters = selected.length === 0;
-    setMaxScrollY(document.body.scrollHeight);
-    if (list.length === 0) fetchMovies();
-    if (maxScrollY < windowPosition + 1500 && noFilters) {
-      appendFetchMovies();
-    } else if (!noFilters) {
-      appendFetchFilteredMovies();
-    }
+    if (window.scrollY > document.body.scrollHeight * 0.75) handleMovieFetch();
   }, [windowPosition]);
+
+  /* will fetch initial movies on mounted */
+  useEffect(() => {
+    if (list.length === 0) fetchMovies();
+  }, []);
+
+  /* will fetch filtered or will do normal fetch */
+  const handleMovieFetch = () => {
+    const someFilterSelected = selected.length > 0;
+    someFilterSelected ? appendFetchFilteredMovies() : appendFetchMovies();
+  };
 
   const fetchMovies = async () => {
     const movies = await getMovieList();
     setList(movies.results);
   };
+
   const appendMoviesToList = (movies) => {
     const newList = [...list, ...movies.results];
     setList(newList);
     setPageCount(pageCount + 1);
   };
+
   const appendFetchMovies = async () => {
     const newMovies = await getMovieList(pageCount);
     appendMoviesToList(newMovies);
   };
+
   const appendFetchFilteredMovies = async () => {
     const newMovies = await getMoviesByGenre(selected, pageCount);
     appendMoviesToList(newMovies);
   };
 
+  const renderList = list.map((movie, index) => (
+    <MovieCard
+      key={index}
+      id={movie.id}
+      title={movie.title}
+      originalTitle={movie.original_title}
+      releaseDate={movie.release_date}
+      backdropPath={movie.backdrop_path}
+      posterPath={movie.poster_path}
+      overview={movie.overview}
+      genreIds={movie.genre_ids}
+      voteAverage={movie.vote_average}
+    />
+  ));
+
   return (
     <section id="movie-list">
       {list && list.length > 0 ? (
-        list.map((movie) => {
-          const {
-            id,
-            title,
-            original_title,
-            release_date,
-            backdrop_path,
-            poster_path,
-            overview,
-            genre_ids,
-            vote_average,
-          } = movie;
-          return (
-            <MovieCard
-              key={id}
-              id={id}
-              title={title}
-              originalTitle={original_title}
-              releaseDate={release_date}
-              backdropPath={backdrop_path}
-              posterPath={poster_path}
-              overview={overview}
-              genreIds={genre_ids}
-              voteAverage={vote_average}
-            />
-          );
-        })
+        renderList
       ) : (
         <div id="loading">Loading movies, or a bug 🐛</div>
       )}
@@ -81,4 +77,4 @@ const MovieList = () => {
   );
 };
 
-export default MovieList;
+export default memo(MovieList);
