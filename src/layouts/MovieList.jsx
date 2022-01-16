@@ -1,32 +1,16 @@
 import "./MovieList.css";
 import { getMovieList, getMoviesByGenre } from "../services/movies";
 import MovieCard from "../components/MovieCard";
-import { useEffect, useContext, useState, memo } from "react";
+import { useEffect, useContext, memo } from "react";
 import AppContext from "../context/AppContext";
-import FilterContext from "../context/FilterContext";
 import useWindowPosition from "../hooks/useWindowPosition";
 
 const MovieList = () => {
   /* using useContext instead of useState 
   to store the global movie list */
-  const { list, setList } = useContext(AppContext);
-  const { selected } = useContext(FilterContext);
-  const [pageCount, setPageCount] = useState(1);
-  const [ratio, setRatio] = useState(0.5)
+  const { list, setList, selected, ratio, setRatio, pageCount, setPageCount } =
+    useContext(AppContext);
   const windowPosition = useWindowPosition();
-
-  /* detect desired position */
-  useEffect(() => {
-    if (window.scrollY > document.body.scrollHeight * ratio) {
-      handleMovieFetch();
-      setRatio(0.75)
-    }
-  }, [windowPosition]);
-
-  /* will fetch initial movies on mounted */
-  useEffect(() => {
-    if (list.length === 0) fetchMovies();
-  }, []);
 
   /* will fetch filtered or will do normal fetch */
   const handleMovieFetch = () => {
@@ -35,7 +19,7 @@ const MovieList = () => {
   };
 
   const fetchMovies = async () => {
-    const movies = await getMovieList();
+    const movies = await getMovieList(pageCount);
     setList(movies.results);
   };
 
@@ -54,6 +38,23 @@ const MovieList = () => {
     const newMovies = await getMoviesByGenre(selected, pageCount);
     appendMoviesToList(newMovies);
   };
+
+  /* will fetch initial movies on mounted */
+  useEffect(() => {
+    if (list.length === 0) {
+      fetchMovies();
+      setPageCount(2)
+    }
+  }, []);
+
+  /* detect desired position */
+  useEffect(() => {
+    if (window.scrollY > document.body.scrollHeight * ratio) {
+      setRatio(0.75);
+      setPageCount(pageCount + 1);
+      handleMovieFetch();
+    }
+  }, [windowPosition, list]);
 
   const renderList = list.map((movie, index) => (
     <MovieCard
