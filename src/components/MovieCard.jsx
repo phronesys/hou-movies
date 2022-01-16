@@ -1,6 +1,6 @@
 import "./MovieCard.css";
 import { useContext } from "react";
-import GenresContext from "../context/GenresContext";
+import AppContext from "../context/AppContext";
 
 export default function MovieCard({
   title,
@@ -10,7 +10,7 @@ export default function MovieCard({
   genreIds,
   voteAverage,
 }) {
-  const { genres } = useContext(GenresContext);
+  const { genres } = useContext(AppContext);
   const imageUrl = `https://image.tmdb.org/t/p/w500/${posterPath}`;
   const moviePoster = {
     backgroundImage: `url(${imageUrl})`,
