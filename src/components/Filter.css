@@ -6,9 +6,6 @@
   @apply px-4 py-2 min-w-max rounded-lg flex flex-row items-center gap-2;
   @apply hover:text-houm-primary border border-white bg-white text-gray-900 font-medium;
 }
-.filter button:disabled {
-  @apply bg-houm-secondary;
-}
 
 .filter button.open {
   @apply border-houm-primary text-houm-primary;
@@ -46,7 +43,7 @@
 }
 
 .filter > .list > footer > button.primary {
-  @apply bg-houm-primary text-white hover:text-white hover:border-white;
+  @apply text-white hover:text-white hover:border-white;
 }
 .filter > .list > footer > button:hover,
 .filter > .list > footer > button:hover svg {
